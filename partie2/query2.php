@@ -18,17 +18,15 @@
 
   $eav = $marshaler->marshalJson('
       {
-          "africa": ":Africa"
-          ":lowArea": 400000,
-          ":highArea": 500000
+          ":africa": "Africa"
       }
   ');
 
   $params = [
       'TableName' => $tableName,
       'ProjectionExpression' => 'nom, area',
-      'FilterExpression' =>
-        'nom = :africa',
+      'FilterExpression' => '#rg = :africa',
+      'ExpressionAttributeNames'=> [ '#rg' => 'region' ],
       'ExpressionAttributeValues'=> $eav
   ];
 
