@@ -34,10 +34,14 @@
      while (true) {
          $result = $dynamodb->scan($params);
 
+         $ctr = 0;
          foreach ($result['Items'] as $i) {
              $countries = $marshaler->unmarshalItem($i);
-             echo $countries['nom'] . ': ' . $countries['area'];
-             ?><br><?php
+             if($ctr >= 10 && $ctr <=22){
+                 echo $countries['nom'] . ': ' . $countries['area'];
+                 ?><br><?php
+             }
+             $ctr++;
          }
 
          if (isset($result['LastEvaluatedKey'])) {
