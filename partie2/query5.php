@@ -16,21 +16,12 @@
   $marshaler = new Marshaler();
   $tableName = 'ThibaultMagyCountries';
 
-  $eav = $marshaler->marshalJson('
-      {
-          "africa": ":Africa"
-          ":lowArea": 400000,
-          ":highArea": 500000
-      }
-  ');
-
   $params = [
       'TableName' => $tableName,
-      'ProjectionExpression' => 'nom, area',
-      'FilterExpression' =>
-        'nom = :africa',
-      'ExpressionAttributeValues'=> $eav
+      'ProjectionExpression' => 'nom',
   ];
+
+  $letter = 'S';
 
   try {
      while (true) {
@@ -38,8 +29,10 @@
 
          foreach ($result['Items'] as $i) {
              $countries = $marshaler->unmarshalItem($i);
-             echo $countries['nom'] . ': ' . $countries['area'];
-             ?><br><?php
+             if($countries['nom'][0] == $letter){
+                 echo $countries['nom'];
+                 ?><br><?php
+             }
          }
 
          if (isset($result['LastEvaluatedKey'])) {

@@ -18,7 +18,6 @@
 
   $eav = $marshaler->marshalJson('
       {
-          "africa": ":Africa"
           ":lowArea": 400000,
           ":highArea": 500000
       }
@@ -28,7 +27,7 @@
       'TableName' => $tableName,
       'ProjectionExpression' => 'nom, area',
       'FilterExpression' =>
-        'nom = :africa',
+        'area between :lowArea and :highArea',
       'ExpressionAttributeValues'=> $eav
   ];
 
